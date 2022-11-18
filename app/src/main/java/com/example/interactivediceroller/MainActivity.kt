@@ -12,6 +12,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val rollButton: Button = findViewById(R.id.button)
+
         rollButton.setOnClickListener {
             rollDice()
 
@@ -20,24 +21,25 @@ class MainActivity : AppCompatActivity() {
             // val toast = Toast.makeText(this, "Dice Rolled!", Toast.LENGTH_SHORT) -- DEPRECATED
 
             // For future codes, using SnackBar is recommended by google via Material Design.
-
             val snackListPos = listOf(
                 "Well Done!", "Let's Roll", "That's what you got", "Hell Yeah!", "Noice!"
             )
             Snackbar.make(rollButton, snackListPos.random(), Snackbar.LENGTH_SHORT).show()
-
         }
+        rollDice()
     }
 
     /**
      * Roll the dice and update the screen with the result.
      */
     private fun rollDice() {
-        val dice = Dice(20) // Calling Dice Class to create a D6
+        // Calling Dice Class to create a D20
+        val dice = Dice(20)
         val diceRoll = dice.roll()
-        // ID:Dice (ImageView)
+        // Layout ID:Dice (ImageView)
         val diceImage: ImageView = findViewById(R.id.dice)
-        // Update the result if the proper dice image
+
+        // Update the result using a Image Resource
         when (diceRoll) {
             1 -> diceImage.setImageResource(R.drawable.dice_1)
             2 -> diceImage.setImageResource(R.drawable.dice_2)
@@ -46,5 +48,7 @@ class MainActivity : AppCompatActivity() {
             5 -> diceImage.setImageResource(R.drawable.dice_5)
             6 -> diceImage.setImageResource(R.drawable.dice_6)
         }
+        // Update the content description linked to the dice Val.
+        diceImage.contentDescription = diceRoll.toString()
     }
 }
